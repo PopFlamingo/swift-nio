@@ -289,6 +289,19 @@ extension CircularBuffer: BidirectionalCollection, RandomAccessCollection, Range
     }
 }
 
+extension CircularBuffer: Equatable where Element: Equatable {
+    public static func ==(lhs: CircularBuffer, rhs: CircularBuffer) -> Bool { lhs.count == rhs.count && zip(lhs, rhs).allSatisfy(==)
+    }
+}
+
+extension CircularBuffer: Hashable where Element: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        for element in self {
+            hasher.combine(element)
+        }
+    }
+}
+
 // MARK: - Private functions
 
 private extension CircularBuffer {
