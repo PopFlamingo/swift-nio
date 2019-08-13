@@ -517,7 +517,7 @@ public final class ClientBootstrap {
         @inline(__always)
         func setupChannel() -> EventLoopFuture<Channel> {
             eventLoop.assertInEventLoop()
-            channelInitializer(channel).flatMap {
+            channelInitializer(channel).hop(to: eventLoop).flatMap {
                 channelOptions.applyAllChannelOptions(to: channel)
             }.flatMap {
                 channel.registerAndDoSynchronously(body)
